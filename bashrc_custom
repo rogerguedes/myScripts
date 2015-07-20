@@ -5,3 +5,30 @@ parse_git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
 export PS1="\u@\h \[\033[96m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
+
+whatismyip(){
+    curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//'
+}
+
+pwdToSysClip(){
+    echo -n $PWD | xclip -selection clipboard
+}
+
+catToMySysClip(){
+    cat $1 | xclip -selection clipboard
+}
+
+nautilusHere(){
+    nautilus "$PWD"
+}
+
+findBeagle(){
+    while true; do sudo nmap -sT -p 22 200.129.11.2/24 | grep -i -B4 "MAC Address: $1:"; done;
+}
+
+mdToHTML(){
+    echo -e "<html>\n<head>\n<meta http-equiv="refresh" content="5">\n<style>\n\ntd, th, table{\n    border: solid 1px black;\n}\n\n</style>\n</head>"
+
+    markdown $1 
+    echo "</html>"
+}
